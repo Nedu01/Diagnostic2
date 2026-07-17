@@ -1,0 +1,23 @@
+:root {
+  --cream: #faf4e8;
+  --cream-2: #f5edd9;
+  --ink: #3d2817;
+  --ink-soft: #574636;
+  --gold: #b8860b;
+  --gold-strong: #8a6a22;
+  --line: #e8d9a8;
+  --card: rgba(255, 255, 255, 0.65);
+
+  --band-strong: #4a6b3a;
+  --band-solid: #b8902f;
+  --band-needs-work: #b5651d;
+  --band-concern: #8b3a2e;
+
+  --font-serif: 'Crimson Text', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Open Sans', system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+
+  --radius: 8px;
+  --shadow-soft: 0 2px 12px rgba(60, 40, 23, 0.08);
+  --shadow-medium: 0 4px 24px rgba(60, 40, 23, 0.12);
+  --max-width: 42rem;
+}

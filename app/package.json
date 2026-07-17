@@ -7,6 +7,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
+    "typecheck": "tsc -b",
+    "test": "vitest",
+    "format": "prettier --write .",
     "preview": "vite preview"
   },
   "dependencies": {
