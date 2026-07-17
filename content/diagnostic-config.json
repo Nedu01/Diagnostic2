@@ -1,0 +1,107 @@
+{
+  "meta": {
+    "id": "marriage-readiness-diagnostic",
+    "version": 1,
+    "title": "The Marriage Readiness Diagnostic",
+    "subtitle": "A Tribunal Judge's Five-Pillar Self-Assessment for Engaged Catholics",
+    "author": "Fr. Michael C. Chime, JCD",
+    "authorTitle": "President, Interdiocesan Marriage Tribunal, Enugu",
+    "motto": "Ad Maiorem Dei Gloriam",
+    "sourceUrl": "https://www.catholicmarriagelife.com/diagnostic",
+    "resultsGuideUrl": "https://www.catholicmarriagelife.com/diagnostic-report",
+    "shareText": "A free five-minute diagnostic for engaged Catholic couples, from a marriage tribunal judge of twenty years. Worth taking before you say \"I do.\""
+  },
+  "scale": {
+    "type": "three-point",
+    "options": [
+      { "value": 2, "label": "Yes,", "text": "and I can point to it." },
+      { "value": 1, "label": "Not yet,", "text": "we have not faced this." },
+      { "value": 0, "label": "No,", "text": "this is not yet true of us." }
+    ]
+  },
+  "pillars": ["Clarity", "Freedom", "Capacity", "Intention", "Unity"],
+  "questions": [
+    { "id": 1, "pillar": "Clarity", "text": "I can name the single demand of lifelong Catholic marriage that my fiancé(e) finds hardest, in their own words and not my guess, and they can name mine." },
+    { "id": 2, "pillar": "Clarity", "text": "I could explain to someone who doubted it, clearly and in my own words, why a Catholic marriage cannot simply be ended, and my reason would go beyond \"because the Church says so.\"" },
+    { "id": 3, "pillar": "Clarity", "text": "We have already come through at least one real hardship together, an illness, a loss, money trouble, or a family crisis, and I can describe how each of us behaved when it came." },
+    { "id": 4, "pillar": "Clarity", "text": "Neither of us has ever raised divorce as a possible exit, even in anger or in jest, and both of us speak of this marriage as having no way out held in reserve." },
+    { "id": 5, "pillar": "Freedom", "text": "I can point to the moment I chose this marriage for myself; it was my own decision, not the day it was simply expected, arranged, or assumed for me." },
+    { "id": 6, "pillar": "Freedom", "text": "If my family turned against this marriage tomorrow, I know the choice would still be mine, and I would still make it." },
+    { "id": 7, "pillar": "Freedom", "text": "If a serious reason to delay the wedding appeared next week, I believe I could actually stop the plans, face the embarrassment and the money already spent, rather than being carried forward because stopping feels impossible." },
+    { "id": 8, "pillar": "Freedom", "text": "No one has ever made me feel I would face punishment, rejection, or ruin if I did not marry, and my fiancé(e) has never used guilt, pressure, or threats to keep this wedding on course." },
+    { "id": 9, "pillar": "Capacity", "text": "If either of us has struggled with drink, drugs, pornography, gambling, or another compulsion, we have named it openly to each other and taken a real step about it, rather than leaving it hidden or brushed aside." },
+    { "id": 10, "pillar": "Capacity", "text": "Each of us already runs the ordinary business of an adult life without being rescued: work or study, money, commitments kept, and the daily decisions of living." },
+    { "id": 11, "pillar": "Capacity", "text": "When something has gone badly for us, a plan collapsed, one of us failed at something, money grew tight, we recovered and kept going rather than falling apart or turning on each other, and I can name a real example." },
+    { "id": 12, "pillar": "Capacity", "text": "If either of us carries a mental or emotional difficulty that affects daily life, the other knows of it, it is not concealed, and we are actually doing something about it rather than hoping marriage will settle it." },
+    { "id": 13, "pillar": "Intention", "text": "Faithfulness has already cost me something real, an attraction I turned from, a past relationship I ended cleanly, or a temptation I named to my fiancé(e) instead of hiding, and I chose faithfulness then." },
+    { "id": 14, "pillar": "Intention", "text": "We have spoken plainly about being open to children, and neither of us is entering this marriage with a private plan to refuse them or to prevent them for good." },
+    { "id": 15, "pillar": "Intention", "text": "There is nothing about this marriage I am keeping back as a private condition or a quiet \"only if,\" and there is no thought I would be afraid to say aloud to my fiancé(e) before the wedding." },
+    { "id": 16, "pillar": "Intention", "text": "If every practical benefit of marrying this person vanished tomorrow, no papers, no money, no status, no escape from home, no settling of a pregnancy, I would still marry them for themselves." },
+    { "id": 17, "pillar": "Unity", "text": "When our values have actually been tested by a real choice, how money is spent, how family is treated, how the faith is practised, we have landed in the same place, and where we still differ I can say exactly where." },
+    { "id": 18, "pillar": "Unity", "text": "In our last three real disagreements, neither of us went silent for days, walked out, or used breaking up as a threat, and we can each say what those three were about." },
+    { "id": 19, "pillar": "Unity", "text": "We have already made real decisions together on the questions that run a marriage, where we will live, how money will work, how the faith will be practised, how children will be raised, and these are settled, not conversations we keep postponing." },
+    { "id": 20, "pillar": "Unity", "text": "Setting the wedding planning aside, we regularly spend ordinary time together that we both enjoy, and I can describe what a plain, unremarkable week of our friendship actually looks like." }
+  ],
+  "scoring": {
+    "perQuestionMax": 2,
+    "perPillarMax": 8,
+    "totalMax": 40,
+    "pillarBands": [
+      { "key": "strong", "label": "Strong", "min": 7 },
+      { "key": "solid", "label": "Solid", "min": 5 },
+      { "key": "needs_work", "label": "Needs Work", "min": 3 },
+      { "key": "concern", "label": "Concern", "min": 0 }
+    ],
+    "overallBands": [
+      { "key": "strong", "label": "Strong foundation.", "min": 34 },
+      { "key": "good", "label": "Generally solid.", "min": 26 },
+      { "key": "gaps", "label": "Significant gaps.", "min": 18 },
+      { "key": "concern", "label": "Honest concern.", "min": 0 }
+    ]
+  },
+  "overallFeedback": {
+    "strong": "Strong foundation. You and your fiancé(e) have done much of the deep work that valid Catholic marriage requires. Continue your preparation with confidence. Address any single yellow pillar through honest conversation, and consider sharing these reflections with the priest preparing you for the sacrament.",
+    "good": "Generally solid foundation, with two or three real conversations standing between you and a confident marriage. Identify the pillars where you scored lowest and make those conversations the focus of your remaining preparation. Many of these conversations are better had with a priest in the room than alone.",
+    "gaps": "Significant gaps exist in your preparation for sacramental marriage. This is not a judgement on you or your fiancé(e). It is an honest reading of where things stand right now. Do not slow your wedding to fix appearances. Slow your wedding, if necessary, to do this work properly. Many couples in this band who delayed by six months or a year later thanked God they did.",
+    "concern": "Your responses point to honest, serious concern about whether the marriage you are preparing for would be valid in the eyes of the Church and durable in the years ahead. Please do not proceed without sitting down at length with a priest who can give you time and care. A delayed wedding is recoverable. A null or broken marriage is a wound that lasts. Mercy, not despair, is the right response to what this diagnostic has shown you."
+  },
+  "pillarFeedback": {
+    "Clarity": {
+      "strong": "You have done the foundational work of understanding what Catholic marriage actually is. This shared clarity will be one of your greatest strengths in the years ahead. Continue these conversations regularly. They are the soil in which strong marriages grow.",
+      "solid": "You have a basic grasp of what Catholic marriage requires, but gaps in shared understanding deserve attention before the wedding. Revisit the questions you answered \"Not yet\" on and discuss them openly. A priest or marriage prep mentor can help fill in what remains unclear.",
+      "needs_work": "Significant gaps remain in your understanding of what you are committing to at the altar. This is not a verdict on your marriage. It is a call to do the preparation that matters most. Schedule time with a priest before the wedding to work through Catholic teaching on the indissolubility, permanence, and demands of sacramental marriage.",
+      "concern": "You may be approaching the altar without a clear understanding of what Catholic marriage requires for life. This is one of the most common patterns in marriages later declared null. Before any further wedding planning, speak with a priest about whether you are ready to make a vow whose full meaning is still unclear to you."
+    },
+    "Freedom": {
+      "strong": "You are entering marriage from a place of genuine internal freedom. This is the foundation on which valid consent rests. Your willingness to marry comes from love and choice, not from pressure or fear. Treasure this freedom and protect it in every decision your marriage will require of you.",
+      "solid": "Your consent is largely free, but small pressures or fears may be shaping the decision more than you realise. Spend time alone in prayer asking yourself honestly: am I marrying because I want to, or because something or someone is pushing me? Talk with a priest about what you discover.",
+      "needs_work": "Real pressures are influencing your decision to marry. These pressures do not necessarily make the marriage invalid, but they need to be named, examined, and resolved before the wedding day. Speak with a confessor or spiritual director who can help you separate what you genuinely want from what others want for you.",
+      "concern": "You may not be entering marriage as a free agent. Family pressure, fear, or social expectation may be carrying more weight than your own desire. Under canon law, consent that is not free is not valid. Please do not proceed without first speaking, alone, with a priest you trust."
+    },
+    "Capacity": {
+      "strong": "You and your fiancé(e) show the human and emotional capacity to live what marriage demands daily. This does not mean perfection. It means the basic stability, maturity, and resilience that married life requires. Continue building this capacity through honest conversation and shared challenges.",
+      "solid": "You both possess most of what is needed for daily marital life, but specific areas of capacity need strengthening or honest acknowledgement. Identify the questions you answered \"Not yet\" on and address them now while you have time. Some capacity issues are normal growing edges. Others are warning lights.",
+      "needs_work": "Significant capacity concerns are present in one or both of you. These could include unaddressed addictions, untreated mental health conditions, financial instability, or chronic inability to handle conflict. These do not disqualify marriage, but they cannot be ignored. Seek professional help and pastoral guidance before the wedding.",
+      "concern": "There are serious questions about whether one or both of you have the capacity, at this moment, to assume the obligations of marriage. This is not a judgement on your worth. It is a hard truth that mercy requires we face honestly. A delay in marriage is not a tragedy. A null marriage is. Please speak with a priest before going further."
+    },
+    "Intention": {
+      "strong": "You enter marriage intending exactly what Catholic marriage is: a lifelong, faithful, fruitful union, with no hidden reservations or conditions. This is the heart of valid consent. Renew this intention often in the years ahead, especially in the difficult seasons every marriage carries.",
+      "solid": "Your basic intention is sound, but unspoken reservations or assumptions may deserve to be named before the wedding. Have an honest conversation with your fiancé(e) about the areas you answered \"Not yet\" on. Marriage cannot bear secret conditions.",
+      "needs_work": "There are real questions about what you are intending in this marriage. If you are entering with reservations about permanence, fidelity, or openness to children, these are not minor issues. They go to the heart of what makes a marriage valid. Speak with a priest before proceeding.",
+      "concern": "Your responses suggest you may be intending something other than what Catholic marriage actually is. This is one of the most common grounds on which marriages are declared null. Please do not say \"I do\" until you have spoken at length with a priest about whether the marriage you intend is the marriage the Church will witness."
+    },
+    "Unity": {
+      "strong": "You and your fiancé(e) are building one life, not running parallel lives that share an address. The values, communication, practical alignment, and shared friendship that you describe are signs of real marital unity. Protect these. They are easy to lose and hard to rebuild.",
+      "solid": "Real unity exists between you, but specific areas of alignment need work before the wedding. Identify which questions you answered \"Not yet\" on, and have those conversations now. Differences left unspoken before marriage tend to become wounds within it.",
+      "needs_work": "Significant gaps exist between you on the practical and emotional foundations of married life. You may love each other genuinely while still lacking the unity that marriage requires for daily life. Use the months before the wedding to do this work honestly, with the help of a priest or marriage prep mentor.",
+      "concern": "You may be marrying someone with whom you are not yet united on what marriage actually means in practice. Love alone does not make a marriage work. Shared values, real communication, and practical alignment do. Please do not assume these will appear after the wedding. They rarely do."
+    }
+  },
+  "welcome": {
+    "paragraphs": [
+      "Nearly every nullity case I have read carried, somewhere in its history, warning signs the couple did not recognise before their wedding day. Some confess afterwards, \"Father, if someone had asked me these questions, I would have known.\"",
+      "This five-minute assessment, drawn from twenty years of tribunal experience and the Five Pillars of Valid Consent, is the conversation every engaged Catholic couple should have with themselves before saying \"I do.\" Answer honestly. The strength of your future marriage rests not on the score, but on the conversations this assessment will open between you, your fiancé(e), and the priest preparing you for the sacrament."
+    ],
+    "cta": "Begin the Diagnostic"
+  }
+}
