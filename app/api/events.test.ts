@@ -61,6 +61,14 @@ describe('/api/events', () => {
     expect(inserted).toHaveLength(0)
   })
 
+  it('rejects prototype-colliding event names', async () => {
+    for (const name of ['constructor', 'toString', 'valueOf', '__proto__', 'hasOwnProperty']) {
+      const sent = await call('POST', { name, visitorId: VISITOR, props: {} })
+      expect(sent.status).toBe(400)
+    }
+    expect(inserted).toHaveLength(0)
+  })
+
   it('rejects unknown props on a known event', async () => {
     const sent = await call('POST', { name: 'diagnostic_started', visitorId: VISITOR, props: { email: 'a@b.com' } })
     expect(sent.status).toBe(400)

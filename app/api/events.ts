@@ -11,23 +11,23 @@ type Props = Record<string, unknown>
 const onlyKeys = (p: Props, allowed: string[]) => Object.keys(p).every((k) => allowed.includes(k))
 
 /** Allowlist: event name → validator for its props. Anything else is rejected. */
-const EVENTS: Record<string, (p: Props) => boolean> = {
-  visit: (p) =>
+const EVENTS = new Map<string, (p: Props) => boolean>([
+  ['visit', (p) =>
     onlyKeys(p, ['source']) &&
     (p.source === undefined ||
-      (typeof p.source === 'string' && p.source.length <= 100 && !p.source.includes('@'))),
-  diagnostic_started: (p) => onlyKeys(p, []),
-  question_answered: (p) =>
+      (typeof p.source === 'string' && p.source.length <= 100 && !p.source.includes('@')))],
+  ['diagnostic_started', (p) => onlyKeys(p, [])],
+  ['question_answered', (p) =>
     onlyKeys(p, ['question']) &&
     typeof p.question === 'number' && Number.isInteger(p.question) &&
-    p.question >= 1 && p.question <= 20,
-  diagnostic_completed: (p) =>
+    p.question >= 1 && p.question <= 20],
+  ['diagnostic_completed', (p) =>
     onlyKeys(p, ['band', ...PILLARS]) &&
     OVERALL_BAND.has(String(p.band)) &&
-    PILLARS.every((k) => PILLAR_BAND.has(String(p[k]))),
-  report_unlocked: (p) => onlyKeys(p, ['band']) && OVERALL_BAND.has(String(p.band)),
-  result_shared: (p) => onlyKeys(p, ['method']) && ['native', 'clipboard'].includes(String(p.method)),
-}
+    PILLARS.every((k) => PILLAR_BAND.has(String(p[k])))],
+  ['report_unlocked', (p) => onlyKeys(p, ['band']) && OVERALL_BAND.has(String(p.band))],
+  ['result_shared', (p) => onlyKeys(p, ['method']) && ['native', 'clipboard'].includes(String(p.method))],
+])
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
@@ -39,7 +39,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     visitorId?: string
     props?: Props
   }
-  const validate = name ? EVENTS[name] : undefined
+  const validate = typeof name === 'string' ? EVENTS.get(name) : undefined
   if (
     !validate ||
     typeof visitorId !== 'string' || !UUID_RE.test(visitorId) ||
