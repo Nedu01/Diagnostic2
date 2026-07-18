@@ -3,11 +3,12 @@ import type { QueryFn } from './db'
 
 /**
  * Stable, non-reversible key for an IP so raw addresses are never stored.
- * Keyed with the session secret (falling back to an app-static key) so the
- * hash cannot be brute-forced from the small IP space without the key.
+ * Keyed with the session secret so the hash cannot be brute-forced from the
+ * small IP space; fails closed when the secret is not configured.
  */
 export function hashIp(ip: string): string {
-  const key = process.env.ADMIN_SESSION_SECRET ?? 'diagnostic-rate-limit-static-key'
+  const key = process.env.ADMIN_SESSION_SECRET
+  if (!key) throw new Error('ADMIN_SESSION_SECRET is not configured')
   return createHmac('sha256', key).update(ip).digest('hex').slice(0, 32)
 }
 

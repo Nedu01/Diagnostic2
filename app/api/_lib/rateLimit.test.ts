@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import type { QueryFn } from './db'
 import { checkRateLimit, hashIp } from './rateLimit'
 
@@ -12,6 +12,13 @@ const stubQ = (count: number): { q: QueryFn; calls: { text: string; params: unkn
 }
 
 describe('hashIp', () => {
+  beforeEach(() => {
+    process.env.ADMIN_SESSION_SECRET = 'test-secret'
+  })
+  afterEach(() => {
+    delete process.env.ADMIN_SESSION_SECRET
+  })
+
   it('is deterministic and does not contain the raw ip', () => {
     expect(hashIp('203.0.113.9')).toBe(hashIp('203.0.113.9'))
     expect(hashIp('203.0.113.9')).not.toContain('203')
@@ -20,15 +27,13 @@ describe('hashIp', () => {
 
   it('changes when the keying secret changes', () => {
     const before = hashIp('203.0.113.9')
-    const savedSecret = process.env.ADMIN_SESSION_SECRET
     process.env.ADMIN_SESSION_SECRET = 'different-secret'
-    const after = hashIp('203.0.113.9')
-    if (savedSecret !== undefined) {
-      process.env.ADMIN_SESSION_SECRET = savedSecret
-    } else {
-      delete process.env.ADMIN_SESSION_SECRET
-    }
-    expect(after).not.toBe(before)
+    expect(hashIp('203.0.113.9')).not.toBe(before)
+  })
+
+  it('throws when the secret is not configured', () => {
+    delete process.env.ADMIN_SESSION_SECRET
+    expect(() => hashIp('203.0.113.9')).toThrow('ADMIN_SESSION_SECRET')
   })
 })
 
