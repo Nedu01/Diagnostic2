@@ -123,3 +123,56 @@ export class SystemeAdapter implements EmailMarketingAdapter {
     }
   }
 }
+
+export interface RecentLead {
+  id: number
+  email: string
+  firstName: string | null
+  registeredAt: string
+  scoreTotal: string | null
+  overallBand: string | null
+  pillarBands: Record<'clarity' | 'freedom' | 'capacity' | 'intention' | 'unity', string | null>
+  tags: string[]
+  url: string
+}
+
+interface SystemeContactDetail {
+  id: number
+  email: string
+  registeredAt: string
+  fields?: { slug: string; value: string | null }[]
+  tags?: { name: string }[]
+}
+
+/**
+ * Newest contacts for the admin dashboard. Fetches one page and sorts by
+ * registeredAt in case the API returns oldest-first.
+ */
+export async function fetchRecentLeads(apiKey: string, limit = 20): Promise<RecentLead[]> {
+  const res = await request(apiKey, 'GET', `/contacts?limit=${Math.max(limit, 50)}`)
+  if (!res.ok) throw new Error(`Systeme contacts list failed: ${res.status}`)
+  const data = (await res.json()) as { items?: SystemeContactDetail[] }
+  return (data.items ?? [])
+    .map((c) => {
+      const field = (slug: string) => c.fields?.find((f) => f.slug === slug)?.value ?? null
+      return {
+        id: c.id,
+        email: c.email,
+        firstName: field('first_name'),
+        registeredAt: c.registeredAt,
+        scoreTotal: field('score_total'),
+        overallBand: field('overall_band'),
+        pillarBands: {
+          clarity: field('clarity_band'),
+          freedom: field('freedom_band'),
+          capacity: field('capacity_band'),
+          intention: field('intention_band'),
+          unity: field('unity_band'),
+        },
+        tags: (c.tags ?? []).map((t) => t.name),
+        url: `https://systeme.io/dashboard/contacts/${c.id}`,
+      }
+    })
+    .sort((a, b) => b.registeredAt.localeCompare(a.registeredAt))
+    .slice(0, limit)
+}

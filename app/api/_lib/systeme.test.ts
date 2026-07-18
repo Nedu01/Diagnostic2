@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { computeResult } from '../../src/lib/scoring'
 import { buildLead } from './leads'
-import { SystemeAdapter } from './systeme'
+import { fetchRecentLeads, SystemeAdapter } from './systeme'
 import type { Answers } from '../../src/lib/types'
 
 const allOnes = new Array(20).fill(1) as Answers // total 20 → gaps; all pillars needs_work
@@ -104,5 +104,61 @@ describe('SystemeAdapter', () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(jsonResponse(401, {}))
     const lead = buildLead('a@b.com', undefined, computeResult(allOnes))
     await expect(new SystemeAdapter('bad').upsertLead(lead)).rejects.toThrow(/401/)
+  })
+})
+
+describe('fetchRecentLeads', () => {
+  beforeEach(() => vi.restoreAllMocks())
+
+  const contact = (id: number, registeredAt: string) => ({
+    id,
+    email: `u${id}@example.com`,
+    registeredAt,
+    fields: [
+      { slug: 'first_name', value: `Name${id}` },
+      { slug: 'score_total', value: '37' },
+      { slug: 'overall_band', value: 'strong' },
+      { slug: 'clarity_band', value: 'strong' },
+      { slug: 'freedom_band', value: 'solid' },
+      { slug: 'capacity_band', value: 'strong' },
+      { slug: 'intention_band', value: 'strong' },
+      { slug: 'unity_band', value: 'needs_work' },
+    ],
+    tags: [{ id: 1, name: 'diagnostic-completed' }, { id: 2, name: 'band-strong' }],
+  })
+
+  it('maps contacts to leads, newest first', async () => {
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+      jsonResponse(200, {
+        items: [contact(1, '2026-07-01T00:00:00+00:00'), contact(2, '2026-07-15T00:00:00+00:00')],
+      }),
+    )
+    const leads = await fetchRecentLeads('key', 20)
+    expect(leads.map((l) => l.id)).toEqual([2, 1])
+    expect(leads[0]).toMatchObject({
+      email: 'u2@example.com',
+      firstName: 'Name2',
+      scoreTotal: '37',
+      overallBand: 'strong',
+      pillarBands: { clarity: 'strong', freedom: 'solid', capacity: 'strong', intention: 'strong', unity: 'needs_work' },
+      tags: ['diagnostic-completed', 'band-strong'],
+      url: 'https://systeme.io/dashboard/contacts/2',
+    })
+  })
+
+  it('tolerates contacts with no custom fields', async () => {
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+      jsonResponse(200, { items: [{ id: 3, email: 'u3@example.com', registeredAt: '2026-07-10T00:00:00+00:00' }] }),
+    )
+    const [lead] = await fetchRecentLeads('key')
+    expect(lead.firstName).toBeNull()
+    expect(lead.overallBand).toBeNull()
+    expect(lead.tags).toEqual([])
+  })
+
+  it('throws on a non-ok response', async () => {
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(jsonResponse(500, {}))
+    // request() retries once on 5xx, so the mock above must resolve twice — mockResolvedValue does.
+    await expect(fetchRecentLeads('key')).rejects.toThrow('contacts list failed')
   })
 })
