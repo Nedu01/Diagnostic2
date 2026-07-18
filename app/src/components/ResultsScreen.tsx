@@ -23,7 +23,14 @@ export default function ResultsScreen() {
   useEffect(() => {
     if (result && !completedTracked.current) {
       completedTracked.current = true
-      track('diagnostic_completed', { band: result.overall.key })
+      track('diagnostic_completed', {
+        band: result.overall.key,
+        clarity: result.pillars.Clarity.band.key,
+        freedom: result.pillars.Freedom.band.key,
+        capacity: result.pillars.Capacity.band.key,
+        intention: result.pillars.Intention.band.key,
+        unity: result.pillars.Unity.band.key,
+      })
     }
   }, [result])
 

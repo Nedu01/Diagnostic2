@@ -1,10 +1,15 @@
+import { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import WelcomeScreen from './components/WelcomeScreen'
 import QuizScreen from './components/QuizScreen'
 import ResultsScreen from './components/ResultsScreen'
 import SharedResultScreen from './components/SharedResultScreen'
+import { trackVisit } from './lib/analytics'
 
 export default function App() {
+  useEffect(() => {
+    trackVisit()
+  }, [])
   return (
     <Routes>
       <Route path="/" element={<WelcomeScreen />} />
