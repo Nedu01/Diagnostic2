@@ -30,3 +30,20 @@ If you are developing a production application, we recommend enabling type-aware
 ```
 
 See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+
+## Admin dashboard
+
+`/admin` shows funnel numbers, result patterns, traffic sources, and recent
+Systeme.io leads. Setup:
+
+1. Create a free Postgres database at neon.tech and run `db/schema.sql` in its
+   SQL editor (once per database).
+2. Environment variables (in `.env.local` locally; in Vercel project settings
+   in production):
+   - `DATABASE_URL` — the Neon connection string
+   - `ADMIN_PASSWORD` — the dashboard password
+   - `ADMIN_SESSION_SECRET` — any long random string; signs the 30-day session
+   - `SYSTEME_API_KEY` — already used by /api/subscribe; also powers the leads list
+
+Anonymous quiz events (never emails, names, or raw answers — result bands
+only) are recorded via `/api/events` into the `events` table.
