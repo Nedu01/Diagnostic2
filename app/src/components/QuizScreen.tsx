@@ -22,8 +22,20 @@ export default function QuizScreen() {
   const total = config.questions.length
   const isLast = currentIndex === total - 1
   const wasAnswered = answers[currentIndex] !== null
+  const startedTracked = useRef(false)
 
   useEffect(() => () => clearTimeout(advanceTimer.current ?? undefined), [])
+
+  // Production traffic often lands directly on /quiz (WordPress button links
+  // here), bypassing WelcomeScreen's track('diagnostic_started'). Fire it
+  // here too so direct entries are counted; double-firing for welcome-path
+  // visitors is fine since the funnel counts distinct visitors.
+  useEffect(() => {
+    if (!startedTracked.current) {
+      startedTracked.current = true
+      track('diagnostic_started')
+    }
+  }, [])
 
   const finishOrAdvance = () => {
     const state = useDiagnostic.getState()

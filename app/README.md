@@ -42,7 +42,9 @@ Systeme.io leads. Setup:
    in production):
    - `DATABASE_URL` — the Neon connection string
    - `ADMIN_PASSWORD` — the dashboard password
-   - `ADMIN_SESSION_SECRET` — any long random string; signs the 30-day session
+   - `ADMIN_SESSION_SECRET` — any long random string; signs the 30-day session,
+     and is also required for event recording — IP hashing for rate limits
+     fails closed without it
    - `SYSTEME_API_KEY` — already used by /api/subscribe; also powers the leads list
 
 Anonymous quiz events (never emails, names, or raw answers — result bands

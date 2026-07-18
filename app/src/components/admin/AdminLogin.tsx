@@ -11,8 +11,11 @@ export default function AdminLogin({ onSuccess }: { onSuccess: () => void }) {
     setError(null)
     setSubmitting(true)
     try {
-      if (await login(password)) onSuccess()
-      else setError('That password is not right. Try again.')
+      const result = await login(password)
+      if (result === 'ok') onSuccess()
+      else if (result === 'wrong_password') setError('That password is not right. Try again.')
+      else if (result === 'rate_limited') setError('Too many attempts. Wait 15 minutes and try again.')
+      else setError('Could not reach the server. Try again in a moment.')
     } catch {
       setError('Could not reach the server. Try again in a moment.')
     } finally {

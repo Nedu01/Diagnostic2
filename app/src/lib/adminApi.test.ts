@@ -12,13 +12,25 @@ beforeEach(() => {
 describe('login', () => {
   it('stores the token on success', async () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue(jsonResponse(200, { ok: true, token: 'a.b' })))
-    expect(await login('pw')).toBe(true)
+    expect(await login('pw')).toBe('ok')
     expect(getToken()).toBe('a.b')
   })
 
-  it('returns false and stores nothing on 401', async () => {
+  it('returns wrong_password and stores nothing on 401', async () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue(jsonResponse(401, { ok: false })))
-    expect(await login('bad')).toBe(false)
+    expect(await login('bad')).toBe('wrong_password')
+    expect(getToken()).toBeNull()
+  })
+
+  it('returns rate_limited on 429', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(jsonResponse(429, { ok: false })))
+    expect(await login('pw')).toBe('rate_limited')
+    expect(getToken()).toBeNull()
+  })
+
+  it('returns error on 502', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(jsonResponse(502, {})))
+    expect(await login('pw')).toBe('error')
     expect(getToken()).toBeNull()
   })
 })

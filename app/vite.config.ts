@@ -6,10 +6,11 @@ import react from '@vitejs/plugin-react'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-// In production /api/subscribe is a Vercel function; `vite dev` doesn't serve
-// those, so this plugin mounts it on the dev server. With SYSTEME_API_KEY set
-// (e.g. in app/.env.local) it runs the real handler; without it, requests are
-// validated and logged but no lead is sent.
+// In production these are Vercel functions; `vite dev` doesn't serve those,
+// so this plugin mounts all of them on the dev server: /api/subscribe (with
+// SYSTEME_API_KEY set, e.g. in app/.env.local, it runs the real handler;
+// without it, requests are validated and logged but no lead is sent),
+// /api/events, /api/admin/login, and /api/admin/stats.
 function devApi(env: Record<string, string>): Plugin {
   return {
     name: 'dev-api',

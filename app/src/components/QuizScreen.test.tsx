@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
@@ -61,5 +61,18 @@ describe('QuizScreen', () => {
     expect(screen.getByText(config.questions[19].text)).toBeInTheDocument()
     await user.click(screen.getByRole('radio', { name: /yes,/i }))
     await waitFor(() => expect(screen.getByText('results page')).toBeInTheDocument())
+  })
+
+  it('fires diagnostic_started once on mount, for direct /quiz entry', async () => {
+    const fetchMock = vi.fn().mockResolvedValue(new Response('{"ok":true}'))
+    vi.stubGlobal('fetch', fetchMock)
+    renderQuiz()
+    await waitFor(() => expect(fetchMock).toHaveBeenCalled())
+    const startedCalls = fetchMock.mock.calls.filter(([, init]) => {
+      const body = JSON.parse((init as RequestInit).body as string) as { name?: string }
+      return body.name === 'diagnostic_started'
+    })
+    expect(startedCalls).toHaveLength(1)
+    vi.unstubAllGlobals()
   })
 })

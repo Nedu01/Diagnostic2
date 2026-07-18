@@ -52,12 +52,12 @@ export async function getStats(q: QueryFn, period: Period): Promise<Stats> {
          group by 1 order by 1`,
       ),
       q(
-        `select props->>'band' as band, count(*) as n
+        `select props->>'band' as band, count(distinct visitor_id) as n
          from events where name = 'diagnostic_completed' and happened_at >= ${since}
          group by 1`,
       ),
       q(
-        `select k.pillar as pillar, e.props->>k.pillar as band, count(*) as n
+        `select k.pillar as pillar, e.props->>k.pillar as band, count(distinct e.visitor_id) as n
          from events e,
               unnest(array['clarity','freedom','capacity','intention','unity']) as k(pillar)
          where e.name = 'diagnostic_completed' and e.happened_at >= ${since}
