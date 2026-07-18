@@ -17,6 +17,19 @@ describe('hashIp', () => {
     expect(hashIp('203.0.113.9')).not.toContain('203')
     expect(hashIp('203.0.113.9')).toHaveLength(32)
   })
+
+  it('changes when the keying secret changes', () => {
+    const before = hashIp('203.0.113.9')
+    const savedSecret = process.env.ADMIN_SESSION_SECRET
+    process.env.ADMIN_SESSION_SECRET = 'different-secret'
+    const after = hashIp('203.0.113.9')
+    if (savedSecret !== undefined) {
+      process.env.ADMIN_SESSION_SECRET = savedSecret
+    } else {
+      delete process.env.ADMIN_SESSION_SECRET
+    }
+    expect(after).not.toBe(before)
+  })
 })
 
 describe('checkRateLimit', () => {

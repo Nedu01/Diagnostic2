@@ -1,9 +1,14 @@
-import { createHash } from 'node:crypto'
+import { createHmac } from 'node:crypto'
 import type { QueryFn } from './db'
 
-/** Stable, non-reversible key for an IP so raw addresses are never stored. */
+/**
+ * Stable, non-reversible key for an IP so raw addresses are never stored.
+ * Keyed with the session secret (falling back to an app-static key) so the
+ * hash cannot be brute-forced from the small IP space without the key.
+ */
 export function hashIp(ip: string): string {
-  return createHash('sha256').update(ip).digest('hex').slice(0, 32)
+  const key = process.env.ADMIN_SESSION_SECRET ?? 'diagnostic-rate-limit-static-key'
+  return createHmac('sha256', key).update(ip).digest('hex').slice(0, 32)
 }
 
 /**
