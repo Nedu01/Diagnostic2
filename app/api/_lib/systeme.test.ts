@@ -100,6 +100,32 @@ describe('SystemeAdapter', () => {
     )
   })
 
+  it('keeps the lead when tag creation is refused (plan tag limit)', async () => {
+    const calls: Array<{ url: string; init?: RequestInit }> = []
+    const errorLog = vi.spyOn(console, 'error').mockImplementation(() => {})
+    vi.spyOn(globalThis, 'fetch').mockImplementation(async (url, init) => {
+      calls.push({ url: String(url), init })
+      const u = String(url)
+      if (u.endsWith('/contacts') && init?.method === 'POST') {
+        return jsonResponse(200, { id: 7 })
+      }
+      if (u.includes('/tags?') && init?.method === 'GET') return jsonResponse(200, { items: [] })
+      if (u.endsWith('/tags') && init?.method === 'POST') {
+        return jsonResponse(422, { detail: 'Please upgrade your plan to create more tags' })
+      }
+      if (u.includes('/contacts/7/tags')) return jsonResponse(200, {})
+      throw new Error(`unexpected fetch: ${init?.method} ${u}`)
+    })
+
+    // allOnes yields needs_work bands, whose tags don't pre-exist and cannot
+    // be created on a maxed-out plan; the lead itself must still be saved.
+    const lead = buildLead('a@b.com', undefined, computeResult(allOnes))
+    await expect(new SystemeAdapter('key').upsertLead(lead)).resolves.toBeUndefined()
+
+    expect(calls.some((c) => c.url.endsWith('/contacts') && c.init?.method === 'POST')).toBe(true)
+    expect(errorLog).toHaveBeenCalled()
+  })
+
   it('throws when contact creation fails outright', async () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(jsonResponse(401, {}))
     const lead = buildLead('a@b.com', undefined, computeResult(allOnes))

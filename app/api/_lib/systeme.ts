@@ -46,9 +46,16 @@ export class SystemeAdapter implements EmailMarketingAdapter {
 
   async upsertLead(lead: Lead): Promise<void> {
     const contactId = await this.upsertContact(lead)
+    // Tags are best-effort: the score fields on the contact already carry the
+    // full result, and a tag failure (e.g. plan tag limit reached) must never
+    // cost the lead itself.
     for (const tag of lead.tags) {
-      const tagId = await this.getOrCreateTagId(tag)
-      await this.assignTag(contactId, tagId)
+      try {
+        const tagId = await this.getOrCreateTagId(tag)
+        await this.assignTag(contactId, tagId)
+      } catch (err) {
+        console.error(`tag '${tag}' skipped:`, err instanceof Error ? err.message : err)
+      }
     }
   }
 
