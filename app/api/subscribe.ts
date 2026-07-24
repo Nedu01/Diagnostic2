@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { decodeAnswers } from '../src/lib/resultCode'
-import { computeResult } from '../src/lib/scoring'
+import { decodeAnswers } from './_lib/resultCode'
+import { computeResult } from './_lib/scoring'
 import { buildLead } from './_lib/leads'
 import { SystemeAdapter } from './_lib/systeme'
 
